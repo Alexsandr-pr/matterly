@@ -1,0 +1,36 @@
+
+
+
+
+// data-spoller-trigger дата атрибут блоку на котором должен идти клик
+// data-spollers родительский блок, оболочка меню аккордеон
+// data-spollers-content  контент спойлера
+
+
+[data-spollers-content] {
+	transition: all 0.3s ease 0s;
+	height: 0;
+	overflow: hidden;
+	box-sizing:content-box;
+	padding: 0px 30px;
+	@media(max-width:767.98px){
+		padding: 0px 15px;
+	}
+}
+[data-spollers].active {
+	border-radius: 10px;
+	box-shadow: 0px 1px 4px 0px #FFA172;
+	[data-spollers-content] {
+		padding: 20px 30px;
+		overflow: "";
+		@media(max-width:767.98px){
+            padding: 15px;
+        }
+	}
+	[data-spoller-trigger] {
+		border-radius:10px 10px 0px 0px;
+	}
+	.spoller-button__chevron {
+		transform: rotate(180deg);
+	}
+}
