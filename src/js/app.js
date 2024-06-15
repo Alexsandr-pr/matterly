@@ -1,5 +1,5 @@
 
-
+import axios from "axios"
 
 
 
@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     accordion();
 
-   
 
     const buttonToTop = document.querySelector(".button-top");
 
@@ -49,26 +48,83 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
 
-    const headerStarted = document.querySelector("#started");
-    const modalWrapper = document.querySelector(".modal__wrapper");
-    const modalClose = document.querySelector(".close")
+    const headerStarted = document.querySelectorAll("[data-started]");
+    const modalWrapper = document.querySelectorAll(".modal__wrapper");
 
-    headerStarted.addEventListener("click", () => {
-        document.body.style.overflow = "hidden";
-        document.body.style.paddingRight = "16px";
-        modalWrapper.classList.add("active");
+    const modalClose = document.querySelectorAll(".close");
+
+    headerStarted.forEach(button => {
+        button.addEventListener("click", () => {
+            modalWrapper[0].classList.add("active");
+        })
     })
-    modalClose.addEventListener("click", () => {
-        document.body.style.overflow = "";
-        document.body.style.paddingRight = "0px";
-        modalWrapper.classList.remove("active");
+
+    modalClose.forEach(close => {
+        close.addEventListener("click", () => {
+            document.querySelectorAll(".modal__wrapper").forEach(item => item.classList.remove("active"))
+        })
     })
-    modalWrapper.addEventListener("click", (e) => {
-        if(e.target.classList.contains("modal__wrapper")) {
-            document.body.style.overflow = "";
-            document.body.style.paddingRight = "0px";
-            modalWrapper.classList.remove("active");
+
+    
+
+    modalWrapper.forEach(wrapper => {
+        wrapper.addEventListener("click", (e) => {
+            if(e.target.classList.contains("modal__wrapper")) {
+                document.querySelectorAll(".modal__wrapper").forEach(item => item.classList.remove("active"))
+            }
+        })
+    })
+
+    
+
+
+    const buttonScrollToFormsArray = document.querySelectorAll("[data-forms]");
+
+    buttonScrollToFormsArray.forEach(button => {
+        const offsetHeightElement = document.querySelector(".main__forms").offsetTop;
+        button.addEventListener("click" , () => {
+            window.scrollTo({
+                top:offsetHeightElement,
+                behavior: "smooth"
+            })
+        })
+    })
+
+    async function sendToDataBase(data) {
+        document.querySelector(".modal__wrapper-1").classList.remove("active")
+        try {
+            const response = await axios.post("http://localhost:5000/api/user", {data});
+            if(response.status === 200) {
+                document.querySelector(".modal__title-send").innerText = `
+                    ${response.data.message}
+                `
+            } 
+        } catch(e) {
+            document.querySelector(".modal__title-send").innerText = `
+                ${e.response.data.message}
+            `
+        } finally {
+            document.querySelector(".modal__wrapper-2").classList.add("active")
         }
+    }
+
+
+    const forms = document.querySelectorAll("form");
+
+    forms.forEach(form => {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault()
+            const formData = new FormData(form)
+            const formValues = {};
+    
+            formData.forEach((value, key) => {
+                formValues[key] = value;
+            });
+
+            sendToDataBase(formValues);
+                
+            form.reset()
+        })
     })
 })
 

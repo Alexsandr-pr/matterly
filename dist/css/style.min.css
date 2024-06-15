@@ -1407,7 +1407,7 @@ button {
   background-color: rgba(30, 41, 59, 0.631372549);
   opacity: 0;
   z-index: -1;
-  transition: all 0.3s ease 0s;
+  transition: all 0.5s ease 0s;
   visibility: hidden;
 }
 
@@ -1420,12 +1420,19 @@ button {
   transform: translateY(0%);
 }
 
+.modal__body-2 {
+  transform: translateY(150%);
+}
+
+.modal__body-1 {
+  transform: translateY(-150%);
+}
+
 .modal__body {
   z-index: 40;
   position: relative;
-  transition: all 0.3s ease 0s;
+  transition: all 0.5s ease 0s;
   top: 4px;
-  transform: translateY(-150%);
   width: 600px;
   border-radius: 20px;
   padding: 40px;
@@ -1446,6 +1453,31 @@ button {
   font-size: 32px;
   color: #1E293B;
   margin-bottom: 20px;
+}
+
+.modal__title-send {
+  text-align: center;
+  color: #1E293B;
+}
+@media (max-width: 991.98px) {
+  .modal__title-send {
+    font-size: 26px;
+  }
+}
+@media (max-width: 767.98px) {
+  .modal__title-send {
+    font-size: 22px;
+  }
+}
+@media (max-width: 487.98px) {
+  .modal__title-send {
+    font-size: 16px;
+  }
+}
+@media (max-width: 387.98px) {
+  .modal__title-send {
+    font-size: 14px;
+  }
 }
 
 .modal__close {
