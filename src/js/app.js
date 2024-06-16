@@ -65,8 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-    
-
     modalWrapper.forEach(wrapper => {
         wrapper.addEventListener("click", (e) => {
             if(e.target.classList.contains("modal__wrapper")) {
@@ -74,9 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         })
     })
-
-    
-
 
     const buttonScrollToFormsArray = document.querySelectorAll("[data-forms]");
 
@@ -91,6 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     async function sendToDataBase(email, name) {
+        
+        document.querySelector(".block-loading").style.display = "block";
         document.querySelector(".modal__wrapper-1").classList.remove("active");
         try {
             const response = await axios.post("https://matterly-server.onrender.com/api/user", {email, name});
@@ -105,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${e.response.data.message}
             `;
         } finally {
+            document.querySelector(".block-loading").style.display = "none";
             document.querySelector(".modal__wrapper-2").classList.add("active");
         }
     }
@@ -124,21 +122,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const email = formValues.email;
             const name = formValues.name;
 
-            let valid = true;
-
-            const emailInput = form.querySelector('#email');
-            const emailError = form.querySelector('#emailError');
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(emailInput.value)) {
-                emailError.style.display = 'inline';
-                valid = false;
-            } else {
-                emailError.style.display = 'none';
-            }
-            if (valid) {
+            
                 sendToDataBase(email, name);
                 form.reset();
-            }
+            
         });
     });
 })
