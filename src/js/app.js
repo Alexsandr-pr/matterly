@@ -90,42 +90,57 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
 
-    async function sendToDataBase(data) {
-        document.querySelector(".modal__wrapper-1").classList.remove("active")
+    async function sendToDataBase(email, name) {
+        document.querySelector(".modal__wrapper-1").classList.remove("active");
         try {
-            const response = await axios.post("http://localhost:5000/api/user", {data});
-            if(response.status === 200) {
+            const response = await axios.post("https://matterly-server.onrender.com/api/user", {email, name});
+
+            if (response.status === 200) {
                 document.querySelector(".modal__title-send").innerText = `
                     ${response.data.message}
-                `
-            } 
-        } catch(e) {
+                `;
+            }
+        } catch (e) {
             document.querySelector(".modal__title-send").innerText = `
                 ${e.response.data.message}
-            `
+            `;
         } finally {
-            document.querySelector(".modal__wrapper-2").classList.add("active")
+            document.querySelector(".modal__wrapper-2").classList.add("active");
         }
     }
-
-
+    
     const forms = document.querySelectorAll("form");
-
+    
     forms.forEach(form => {
         form.addEventListener("submit", (e) => {
-            e.preventDefault()
-            const formData = new FormData(form)
+            e.preventDefault();
+            const formData = new FormData(form);
             const formValues = {};
     
             formData.forEach((value, key) => {
                 formValues[key] = value;
             });
+    
+            const email = formValues.email;
+            const name = formValues.name;
 
-            sendToDataBase(formValues);
-                
-            form.reset()
-        })
-    })
+            let valid = true;
+
+            const emailInput = form.querySelector('#email');
+            const emailError = form.querySelector('#emailError');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value)) {
+                emailError.style.display = 'inline';
+                valid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+            if (valid) {
+                sendToDataBase(email, name);
+                form.reset();
+            }
+        });
+    });
 })
 
 

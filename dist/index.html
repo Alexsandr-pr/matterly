@@ -257,13 +257,15 @@
 						</div>
 						<h3 class="modal__title">Join</h3>
 						<form action="" class="forms__form form">
-							<label for="" class="form__label">
+							<label for="name" class="form__label">
+								<span id="nameError" class="error">Пожалуйста, введите ваше имя.</span>
 								<span class="form__text">Enter Your Name</span>
-								<input placeholder="Your Name" required name="name" type="text" class="form__input">
+								<input id="name" placeholder="Your Name" required name="name" type="text" class="form__input">
 							</label>
-							<label for="" class="form__label">
+							<label for="email" class="form__label">
+								<span id="emailError" class="error">Пожалуйста, введите корректный email.</span>
 								<span class="form__text">Enter Your Email</span>
-								<input placeholder="Your Email" required name="email" type="text" class="form__input">
+								<input id="email" placeholder="Your Email" required name="email" type="email" class="form__input">
 							</label>
 							<button type="submit" class="form__button button">
 								Join
@@ -329,15 +331,15 @@
                     </li>
                 </ul>
             </div>
-            <form class="footer__form footer-form">
+            <div class="footer__form footer-form">
                 <h3 class="footer-form__title footer-title">
                     Sign up now and get an exclusive bonus on first releases and updates 
                 </h3>
-                <div class="footer-form__item">
-                    <input type="email" required placeholder="Enter Your Email" class="footer-form__input">
+                <form class="footer-form__item">
+                    <input type="email" name="email" placeholder="Enter Your Email" class="footer-form__input">
                     <button type="submit" class="footer-form__button">Subscribe</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
 
         <div class="footer__bottom">

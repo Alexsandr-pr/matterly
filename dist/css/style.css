@@ -1485,3 +1485,8 @@ button {
   display: flex;
   justify-content: end;
 }
+
+.error {
+  color: red;
+  display: none;
+}
